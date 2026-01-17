@@ -1,0 +1,40 @@
+.button-group {
+    display: flex;
+    gap: 16px;
+}
+
+button {
+   padding: 12px 24px;
+   border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none; 
+}
+
+.btn-calculate {
+    flex: 1;
+    background:rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
+
+.btn-calculate:hover {
+    background: black;
+    color: white;
+    transition: all 0.5s;
+}
+
+.btn-reset {
+    padding: 12px 24px;
+    background: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.btn-reset:hover {
+    background: black;
+    color: white;
+    transition: all 0.5s;
+}
