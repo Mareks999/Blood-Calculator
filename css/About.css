@@ -4,10 +4,7 @@ body {
     padding: 0;
     font-family: Arial, Tahoma, Serif;
     color: #263238;
-    background-image: url("../assets/background.png"); 
-  background-size: cover;  
-  background-position: center; 
-  background-repeat: no-repeat;
+    background: lightblue;
 }
 
 .about-container {

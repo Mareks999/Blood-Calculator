@@ -3,10 +3,7 @@ body{
     min-height: 100vh;
     background-color: #f0f0f0; 
     font-family: Arial, Tahoma, Serif;
-     background-image: url("../assets/background.png"); 
-  background-size: cover;  
-  background-position: center; 
-  background-repeat: no-repeat;
+     background: lightblue;
 }
 
 img{
