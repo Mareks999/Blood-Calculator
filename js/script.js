@@ -56,9 +56,9 @@ function calculateBP() {
   let ageNote = "";
   if (!isNaN(age)) {
     if (age < 18) {
-      ageNote = "Note: Adult BP ranges may not apply to children.";
+      ageNote = "Adult BP ranges may not apply to children.";
     } else if (age >= 60 && sbp >= 130) {
-      ageNote = "Note: Monitor blood pressure closely due to age.";
+      ageNote = "Monitor blood pressure closely due to age.";
     }
   }
 
