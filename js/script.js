@@ -20,17 +20,24 @@ function calculateBP() {
   // --- BP CATEGORY ---
   let category = "";
 
-  if (sbp >= 180 || dbp >= 120) {
-    category = "Hypertensive Crisis (seek medical attention)";
-  } else if (sbp >= 140 || dbp >= 90) {
-    category = "Hypertension Stage 2";
-  } else if ((sbp >= 130 && sbp <= 139) || (dbp >= 80 && dbp <= 89)) {
-    category = "Hypertension Stage 1";
-  } else if (sbp >= 120 && sbp <= 129 && dbp < 80) {
-    category = "Elevated Blood Pressure";
-  } else {
+ if (sbp > 180 || dbp > 120) {
+    category = "Hypertensive Crisis (seek immediate medical attention)";
+} else if (sbp >= 160 || dbp >= 100) {
+    category = "Hypertension Stage 2 (High)";
+} else if (sbp >= 140 || dbp >= 90) {
+    category = "Hypertension Stage 2 (Low)";
+} else if (sbp >= 135 || dbp >= 85) {
+    category = "Hypertension Stage 1 (Moderate)";
+} else if (sbp >= 130 || dbp >= 80) {
+    category = "Hypertension Stage 1 (Mild)";
+} else if (sbp >= 125 && sbp <= 129 && dbp < 80) {
+    category = "Elevated Blood Pressure (High end)";
+} else if (sbp >= 120 && sbp <= 124 && dbp < 80) {
+    category = "Elevated Blood Pressure (Low end)";
+} else {
     category = "Normal Blood Pressure";
-  }
+}
+
 
   // --- MAP ---
   const map = ((sbp + 2 * dbp) / 3).toFixed(1);
