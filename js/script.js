@@ -84,3 +84,17 @@ function resetForm() {
   document.getElementById("pulse").value = "";
   document.getElementById("result-box").style.display = "none";
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const inputs = document.querySelectorAll('input[type="number"]');
+
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            if (input.value < 0) {
+                input.value = 0;
+            }
+        });
+    });
+});
+
