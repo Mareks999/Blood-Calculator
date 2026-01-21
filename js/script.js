@@ -6,38 +6,47 @@ document.addEventListener("DOMContentLoaded", () => {
   resetBtn.addEventListener("click", resetForm);
 });
 
+
+function isValidNumber(value, min, max) {
+  return !isNaN(value) && value >= min && value <= max;
+}
+
 function calculateBP() {
   const sbp = parseFloat(document.getElementById("systolic").value);
   const dbp = parseFloat(document.getElementById("diastolic").value);
   const age = parseFloat(document.getElementById("age").value);
   const pulse = parseFloat(document.getElementById("pulse").value);
 
-  if (isNaN(sbp) || isNaN(dbp)) {
-    alert("Please enter both systolic and diastolic blood pressure values.");
+  // --- REQUIRED FIELDS VALIDATION ---
+  if (!isValidNumber(sbp, 50, 300)) {
+    alert("Please enter a valid systolic value (50–300 mmHg).");
     return;
   }
 
-  // --- BP CATEGORY ---
-  let category = "";
+  if (!isValidNumber(dbp, 30, 200)) {
+    alert("Please enter a valid diastolic value (30–200 mmHg).");
+    return;
+  }
 
- if (sbp > 180 || dbp > 120) {
-    category = "Hypertensive Crisis (seek immediate medical attention)";
-} else if (sbp >= 160 || dbp >= 100) {
-    category = "Hypertension Stage 2 (High)";
-} else if (sbp >= 140 || dbp >= 90) {
-    category = "Hypertension Stage 2 (Low)";
-} else if (sbp >= 135 || dbp >= 85) {
-    category = "Hypertension Stage 1 (Moderate)";
-} else if (sbp >= 130 || dbp >= 80) {
-    category = "Hypertension Stage 1 (Mild)";
-} else if (sbp >= 125 && sbp <= 129 && dbp < 80) {
-    category = "Elevated Blood Pressure (High end)";
-} else if (sbp >= 120 && sbp <= 124 && dbp < 80) {
-    category = "Elevated Blood Pressure (Low end)";
-} else {
-    category = "Normal Blood Pressure";
-}
+  if (sbp <= dbp) {
+    alert("Systolic pressure must be higher than diastolic pressure.");
+    return;
+  }
 
+  // --- OPTIONAL AGE ---
+  if (!isNaN(age) && !isValidNumber(age, 1, 120)) {
+    alert("Please enter a valid age (1–120).");
+    return;
+  }
+
+  // --- OPTIONAL PULSE ---
+  if (!isNaN(pulse) && !isValidNumber(pulse, 30, 220)) {
+    alert("Please enter a valid pulse (30–220 bpm).");
+    return;
+  }
+
+
+  
 
   // --- MAP ---
   const map = ((sbp + 2 * dbp) / 3).toFixed(1);
@@ -87,14 +96,19 @@ function resetForm() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const inputs = document.querySelectorAll('input[type="number"]');
+  const inputs = document.querySelectorAll('input[type="number"]');
 
-    inputs.forEach(input => {
-        input.addEventListener("input", () => {
-            if (input.value < 0) {
-                input.value = 0;
-            }
-        });
+  inputs.forEach(input => {
+    input.addEventListener("input", () => {
+      if (input.value < 0) {
+        input.value = 0;
+      }
     });
+  });
 });
+
+input.addEventListener("input", () => {
+  input.value = input.value.replace(/[^0-9]/g, "");
+});
+
 
