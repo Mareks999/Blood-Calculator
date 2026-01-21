@@ -5,6 +5,7 @@ body{
     font-family: Arial, Tahoma, Serif;
      background: lightblue;
     display: flex;
+    flex-direction: column;
 }
 
 
