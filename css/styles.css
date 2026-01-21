@@ -4,6 +4,7 @@ body{
     background-color: #f0f0f0; 
     font-family: Arial, Tahoma, Serif;
      background: lightblue;
+    display: flex;
 }
 
 
@@ -16,7 +17,6 @@ body{
     padding: 60px;
     margin: 20px auto 0;
     max-width: 800px;
-    display: flex;
 }
 
 .calculator-card {
