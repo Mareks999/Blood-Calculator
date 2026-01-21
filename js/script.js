@@ -1,23 +1,71 @@
+// ================================
+// BLOCK INVALID KEYS & VALIDATE INPUTS
+// ================================
+function blockInvalidKeys(e) {
+  if (["e", "E", "+", "-", "."].includes(e.key)) {
+    e.preventDefault();
+    return false;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const calculateBtn = document.querySelector(".btn-calculate");
   const resetBtn = document.querySelector(".btn-reset");
 
   calculateBtn.addEventListener("click", calculateBP);
   resetBtn.addEventListener("click", resetForm);
+
+  // Apply input restrictions
+  const inputs = document.querySelectorAll('input[type="number"]');
+
+  inputs.forEach(input => {
+    input.addEventListener("keydown", blockInvalidKeys);
+
+    input.addEventListener("input", () => {
+      // Remove non-numeric characters
+      input.value = input.value.replace(/[^0-9]/g, "");
+
+      let value = parseInt(input.value, 10);
+
+      if (isNaN(value) || value <= 0) {
+        input.value = "";
+        return;
+      }
+
+      // Max limits by input field
+      const limits = {
+        systolic: 300,
+        diastolic: 200,
+        age: 120,
+        pulse: 220
+      };
+
+      const max = limits[input.id] ?? 999;
+
+      if (value > max) {
+        input.value = max;
+      }
+    });
+  });
 });
 
-
+// ================================
+// NUMBER VALIDATION HELPER
+// ================================
 function isValidNumber(value, min, max) {
   return !isNaN(value) && value >= min && value <= max;
 }
 
+// ================================
+// CALCULATION FUNCTION
+// ================================
 function calculateBP() {
-  const sbp = parseFloat(document.getElementById("systolic").value);
-  const dbp = parseFloat(document.getElementById("diastolic").value);
-  const age = parseFloat(document.getElementById("age").value);
-  const pulse = parseFloat(document.getElementById("pulse").value);
+  const sbp = parseInt(document.getElementById("systolic").value, 10);
+  const dbp = parseInt(document.getElementById("diastolic").value, 10);
+  const age = parseInt(document.getElementById("age").value, 10);
+  const pulse = parseInt(document.getElementById("pulse").value, 10);
 
-  // --- REQUIRED FIELDS VALIDATION ---
+  // --- REQUIRED FIELD VALIDATION ---
   if (!isValidNumber(sbp, 50, 300)) {
     alert("Please enter a valid systolic value (50–300 mmHg).");
     return;
@@ -45,23 +93,37 @@ function calculateBP() {
     return;
   }
 
+  // --- BP CATEGORY ---
+  let category = "";
 
-  
+  if (sbp > 180 || dbp > 120) {
+    category = "Hypertensive Crisis (seek immediate medical attention)";
+  } else if (sbp >= 160 || dbp >= 100) {
+    category = "Hypertension Stage 2 (High)";
+  } else if (sbp >= 140 || dbp >= 90) {
+    category = "Hypertension Stage 2 (Low)";
+  } else if (sbp >= 135 || dbp >= 85) {
+    category = "Hypertension Stage 1 (Moderate)";
+  } else if (sbp >= 130 || dbp >= 80) {
+    category = "Hypertension Stage 1 (Mild)";
+  } else if (sbp >= 125 && sbp <= 129 && dbp < 80) {
+    category = "Elevated Blood Pressure (High end)";
+  } else if (sbp >= 120 && sbp <= 124 && dbp < 80) {
+    category = "Elevated Blood Pressure (Low end)";
+  } else {
+    category = "Normal Blood Pressure";
+  }
 
-  // --- MAP ---
+  // --- CALCULATIONS ---
   const map = ((sbp + 2 * dbp) / 3).toFixed(1);
-
-  // --- Pulse Pressure ---
   const pulsePressure = sbp - dbp;
 
-  // --- Shock Index (optional) ---
   let shockIndexText = "Not calculated";
   if (!isNaN(pulse)) {
     const shockIndex = (pulse / sbp).toFixed(2);
     shockIndexText = `${shockIndex} (normal ≈ 0.5–0.7)`;
   }
 
-  // --- Age note ---
   let ageNote = "";
   if (!isNaN(age)) {
     if (age < 18) {
@@ -86,29 +148,12 @@ function calculateBP() {
   resultBox.style.display = "block";
 }
 
+// ================================
+// RESET FUNCTION
+// ================================
 function resetForm() {
-  document.getElementById("systolic").value = "";
-  document.getElementById("diastolic").value = "";
-  document.getElementById("age").value = "";
-  document.getElementById("pulse").value = "";
+  ["systolic", "diastolic", "age", "pulse"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
   document.getElementById("result-box").style.display = "none";
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll('input[type="number"]');
-
-  inputs.forEach(input => {
-    input.addEventListener("input", () => {
-      if (input.value < 0) {
-        input.value = 0;
-      }
-    });
-  });
-});
-
-input.addEventListener("input", () => {
-  input.value = input.value.replace(/[^0-9]/g, "");
-});
-
-
