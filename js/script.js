@@ -75,7 +75,7 @@ function calculateBP() {
     return;
   }
 
-  // --- OPTIONAL PULSE ---
+  
   if (!isNaN(pulse) && !isValidNumber(pulse, 30, 220)) {
     alert("Please enter a valid pulse (30–220 bpm).");
     return;
