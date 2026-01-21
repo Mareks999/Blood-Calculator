@@ -1,6 +1,3 @@
-// ================================
-// BLOCK INVALID KEYS & VALIDATE INPUTS
-// ================================
 function blockInvalidKeys(e) {
   if (["e", "E", "+", "-", "."].includes(e.key)) {
     e.preventDefault();
@@ -15,14 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
   calculateBtn.addEventListener("click", calculateBP);
   resetBtn.addEventListener("click", resetForm);
 
-  // Apply input restrictions
   const inputs = document.querySelectorAll('input[type="number"]');
 
   inputs.forEach(input => {
     input.addEventListener("keydown", blockInvalidKeys);
 
     input.addEventListener("input", () => {
-      // Remove non-numeric characters
+
       input.value = input.value.replace(/[^0-9]/g, "");
 
       let value = parseInt(input.value, 10);
@@ -32,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Max limits by input field
       const limits = {
         systolic: 300,
         diastolic: 200,
@@ -49,23 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// ================================
-// NUMBER VALIDATION HELPER
-// ================================
 function isValidNumber(value, min, max) {
   return !isNaN(value) && value >= min && value <= max;
 }
 
-// ================================
-// CALCULATION FUNCTION
-// ================================
 function calculateBP() {
   const sbp = parseInt(document.getElementById("systolic").value, 10);
   const dbp = parseInt(document.getElementById("diastolic").value, 10);
   const age = parseInt(document.getElementById("age").value, 10);
   const pulse = parseInt(document.getElementById("pulse").value, 10);
 
-  // --- REQUIRED FIELD VALIDATION ---
+
   if (!isValidNumber(sbp, 50, 300)) {
     alert("Please enter a valid systolic value (50–300 mmHg).");
     return;
@@ -81,7 +70,6 @@ function calculateBP() {
     return;
   }
 
-  // --- OPTIONAL AGE ---
   if (!isNaN(age) && !isValidNumber(age, 1, 120)) {
     alert("Please enter a valid age (1–120).");
     return;
@@ -93,7 +81,7 @@ function calculateBP() {
     return;
   }
 
-  // --- BP CATEGORY ---
+
   let category = "";
 
   if (sbp > 180 || dbp > 120) {
@@ -114,7 +102,7 @@ function calculateBP() {
     category = "Normal Blood Pressure";
   }
 
-  // --- CALCULATIONS ---
+
   const map = ((sbp + 2 * dbp) / 3).toFixed(1);
   const pulsePressure = sbp - dbp;
 
@@ -133,7 +121,7 @@ function calculateBP() {
     }
   }
 
-  // --- OUTPUT ---
+
   const resultBox = document.getElementById("result-box");
   const resultContent = document.getElementById("result-content");
 
@@ -148,9 +136,6 @@ function calculateBP() {
   resultBox.style.display = "block";
 }
 
-// ================================
-// RESET FUNCTION
-// ================================
 function resetForm() {
   ["systolic", "diastolic", "age", "pulse"].forEach(id => {
     document.getElementById(id).value = "";
