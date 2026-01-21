@@ -16,6 +16,7 @@ body{
     padding: 60px;
     margin: 20px auto 0;
     max-width: 800px;
+    display: flex;
 }
 
 .calculator-card {
