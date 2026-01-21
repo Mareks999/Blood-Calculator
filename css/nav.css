@@ -21,11 +21,12 @@ nav {
 
 nav ul {
   display: flex;
-  list-style: none; 
+  list-style: none;
+  gap: 1rem;
 }
 
 nav li {
-  padding-left: 1rem; 
+  padding-left: 0; 
 }
 
 nav a {
